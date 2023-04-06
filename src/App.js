@@ -1,15 +1,15 @@
 import React from 'react';
 import Home from './pages/Home.js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Services from './pages/Services.js';
+import Tasks from './pages/Tasks.js';
 
 function App() {
   return (
-    <div class="App">
+    <div className="App">
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
+          <Route path="/tasks" element={<Tasks />} />
         </Routes>
       </Router>
     </div>

@@ -1,15 +1,20 @@
 https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project
 
+Creer la base de données (locale au projet, utilisation de SQLite) :
+
+- cd api
+- python init_db.py
+
 Ouvrir deux terminaux (un backend / un frontend)
 
 backend: 
 
 source backend/venv/bin/activate -> aller dans l'environnement virtuel python
-flask run                        -> lancer le backend
 
-(pas besoin aller racine :)
-npm run start-backend
+Lancer le backend :
+- cd api
+- flask run
 
-frontend : 
+Lancer le frontend : 
+- npm run start 
 
-npm run serve -> lancer le frontend

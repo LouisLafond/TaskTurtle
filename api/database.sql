@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS Task;
+
+CREATE TABLE Task(
+    id INT PRIMARY KEY NOT NULL,
+    title VARCHAR(200) NOT NULL, 
+    description VARCHAR(200) NOT NULL,
+    price FLOAT NOT NULL
+);
+
+

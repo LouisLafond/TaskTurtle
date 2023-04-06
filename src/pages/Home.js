@@ -11,13 +11,13 @@ function Home() {
 
   return (
     <div id="home">
-      <header class="home-header">
-        <img src={`/images/franklin.png`} class="home-logo" alt="Logo tortue" />
+      <header className="home-header">
+        <img src={`/images/franklin.png`} className="home-logo" alt="Logo tortue" />
         <p>The current time is {currentTime}.</p>
 
         <div id='menu'>
             <a href='/'>Home</a>
-            <a href='/services'>Services</a>
+            <a href='/tasks'>Services</a>
             <a href='/login'>Login</a>
         </div>
 
