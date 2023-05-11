@@ -1,27 +1,20 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useEffect } from 'react';
+import Navigation from './Navigation.js';
 function Home() {
-  const [currentTime, setCurrentTime] = useState(0);
+  //const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
-    fetch('/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
-    });
+    // fetch('/time').then(res => res.json()).then(data => {
+    //   setCurrentTime(data.time);
+    // });
   }, []);
 
   return (
     <div id="home">
-      <header className="home-header">
+        <Navigation />
+        <h1>Task Turtle</h1>
+        <h2>La tortue qui vous aide à gérer vos tâches</h2>
         <img src={`/images/franklin.png`} className="home-logo" alt="Logo tortue" />
-        <p>The current time is {currentTime}.</p>
-
-        <div id='menu'>
-            <a href='/'>Home</a>
-            <a href='/tasks'>Services</a>
-            <a href='/login'>Login</a>
-        </div>
-
-      </header>
     </div>
   );
 }
