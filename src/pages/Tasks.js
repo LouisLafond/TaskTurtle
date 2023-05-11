@@ -23,7 +23,7 @@ function Tasks() {
                         <h2 className='task-title'>{task[1]}</h2> {/* title */}
                         <p className='task-description'>{task[2]}</p> {/*description */}
                         <p className='task-price'> Prix : {task[3]} €</p> {/*price */}
-                        <button className='task-button'>Je veux ce service</button>
+                        <button className='button-markup'>Je veux ce service</button>
                     </div>
                 ))}
 

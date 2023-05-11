@@ -1,4 +1,4 @@
-from flask import Flask, g, jsonify
+from flask import Flask, g, jsonify, request, redirect, url_for
 import sqlite3
 
 DATABASE = 'database.db'
@@ -28,3 +28,23 @@ def get_tasks():
     c.execute("SELECT * FROM Task")
     tasks = c.fetchall()
     return jsonify(tasks)
+
+@app.route('/tasks/create', methods=['POST'])
+def post_task():
+    db = get_db()
+    c = db.cursor()
+
+    data = request.get_json();
+    name = data['name'];
+    title = data['title'];
+    price = data['price'];
+    content = data['content'];
+
+    c.execute("SELECT MAX(id) FROM Task");
+    last_id = c.fetchone()[0];
+    id = last_id+1;
+    
+    c.execute("INSERT INTO Task (id, title, description, price, isAvailable, user) VALUES (?,?,?,?,?,?)", (id, title, content, price,1, name));
+    db.commit();
+    c.close();
+    return redirect(url_for('get_tasks'));
