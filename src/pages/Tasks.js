@@ -12,24 +12,21 @@ function Tasks() {
             setTasks(data)
         });
       }, []);
+    
 
     return (
         <div id="tasks">
-            <h1>Liste des tâches</h1>
+            <h1 className='text-center'> Liste des tâches</h1>
             <div id='tasks-container'>
-                {tasks.map((task)  => (
-                    <div key={task[0]}>
-                        <h2>{task[0]}</h2>
-                        <h2>{task[1]}</h2>
-                        <h2>{task[2]}</h2>
-                        <h2>{task[3]}</h2>
+                {tasks.map((task) => (
+                    <div key={task[0]} id='task'>
+                        <h2 className='task-title'>{task[1]}</h2> {/* title */}
+                        <p className='task-description'>{task[2]}</p> {/*description */}
+                        <p className='task-price'> Prix : {task[3]} €</p> {/*price */}
+                        <button className='task-button'>Je veux ce service</button>
                     </div>
-                    // <div key={task.id}>
-                    //     <h2>{task.title}</h2>
-                    //     <p>{task.description}</p>
-                    //     <p>{task.price} €</p>
-                    // </div>
                 ))}
+
             </div>
         </div>
     );

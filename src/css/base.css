@@ -7,8 +7,30 @@ body {
     -moz-osx-font-smoothing: grayscale;
   }
   
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-  
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.button-markup {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  background-color: rgb(1, 151, 1);
+  color: #F4F4F4;
+  transition: all 0.2s ease-in-out;
+}
+
+.button-markup:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: rgb(2, 131, 2);
+}
