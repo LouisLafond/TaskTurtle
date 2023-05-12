@@ -48,3 +48,44 @@ def post_task():
     db.commit();
     c.close();
     return redirect(url_for('get_tasks'));
+
+@app.route('/tasks/accept', methods=['POST'])
+def post_user_accept_task():
+    db = get_db()
+    c = db.cursor()
+
+    data = request.get_json();
+    name = data['name'];
+    task_id = data['task_id'];
+
+    c.execute("SELECT MAX(id) FROM Task_User");
+    last_id = c.fetchone()[0];
+    id = last_id+1;
+
+    c.execute("INSERT INTO Task_User(id, taskId, user, isAchieved) VALUES (?,?,?,?)", (id, task_id, name, 0));
+    db.commit();
+    c.close();
+    return redirect(url_for('get_tasks'));
+
+@app.route('/tasks/achieve', methods=['POST'])
+def post_user_achieve_task():
+    db = get_db()
+    c = db.cursor()
+
+    data = request.get_json();
+    task_user_id = data['task_user_id'];
+
+    c.execute("UPDATE Task_User SET isAchieved = 1 WHERE id = ?", (task_user_id));
+    db.commit();
+    c.close();
+    return redirect(url_for('get_tasks'));
+
+@app.route('/tasks/user/<name>')
+def get_user_tasks(name):
+    db = get_db()
+    c = db.cursor()
+    c.execute("SELECT * FROM Task_User " +
+              "INNER JOIN Task ON Task_User.taskId = Task.id " +
+              "WHERE Task_User.user = ?", [name]);
+    tasks = c.fetchall()
+    return jsonify(tasks)
