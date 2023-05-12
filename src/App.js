@@ -3,7 +3,7 @@ import Home from './pages/Home.js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Tasks from './pages/Tasks.js';
 import CreateTask from './pages/CreateTask.js';
-
+import UserTasks from './pages/UserTasks.js';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/tasks/create" element={<CreateTask />} />
-
+          <Route path="/tasks/user/:name" element={<UserTasks name="Truffe"  />} />
         </Routes>
       </Router>
     </div>
