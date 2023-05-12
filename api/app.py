@@ -36,6 +36,8 @@ def post_task():
 
     data = request.get_json();
     name = data['name'];
+    # upper the name
+    name = name.upper();
     title = data['title'];
     price = data['price'];
     content = data['content'];
@@ -57,6 +59,7 @@ def post_user_accept_task():
 
     data = request.get_json();
     name = data['name'];
+    name = name.upper();
     task_id = data['task_id'];
 
     c.execute("SELECT MAX(id) FROM Task_User");
@@ -83,6 +86,7 @@ def patch_user_achieve_task():
 def get_user_tasks(name):
     db = get_db()
     c = db.cursor()
+    name = name.upper();
     c.execute("SELECT * FROM Task_User " +
               "INNER JOIN Task ON Task_User.taskId = Task.id " +
               "WHERE Task_User.user = ?", [name]);
