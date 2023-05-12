@@ -47,10 +47,12 @@ def post_task():
     last_id = c.fetchone()[0];
     id = last_id+1;
     
-    c.execute("INSERT INTO Task (id, title, description, price, isAvailable, user, tel) VALUES (?,?,?,?,?,?, ?)", (id, title, content, price,1, name, tel));
+    c.execute("INSERT INTO Task (id, title, description, price, isAvailable, user, tel) VALUES (?,?,?,?,?,?,?)", (id, title, content, price,1, name, tel));
     db.commit();
     c.close();
-    return redirect(url_for('get_tasks'));
+    return jsonify(
+        message="Tâche créée avec succès."
+    )
 
 @app.route('/tasks/accept', methods=['POST'])
 def post_user_accept_task():
@@ -69,7 +71,9 @@ def post_user_accept_task():
     c.execute("INSERT INTO Task_User(id, taskId, user, isAchieved) VALUES (?,?,?,?)", (id, task_id, name, 0));
     db.commit();
     c.close();
-    return redirect(url_for('get_tasks'));
+    return jsonify(
+        message="Tâche ajoutée à la liste de : " + name + "."
+    )
 
 @app.route('/tasks/achieve', methods=['PATCH'])
 def patch_user_achieve_task():
@@ -80,7 +84,9 @@ def patch_user_achieve_task():
     c.execute("UPDATE Task_User SET isAchieved = 1 WHERE id=?", [id]);
     db.commit();
     c.close();
-    return redirect(url_for('get_tasks'));
+    return jsonify(
+        message="Tâche supprimée de la liste avec succès."
+    )
 
 @app.route('/tasks/user/<name>')
 def get_user_tasks(name):

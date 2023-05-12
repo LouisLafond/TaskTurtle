@@ -8,6 +8,7 @@ function CreateTask() {
     const [content, setContent] = useState('');
     const [price, setPrice] = useState(0);
     const [tel, setTel] = useState('');
+    const [feedback, setFeedback] = useState(''); // feedback from backend [success or error]
 
     const sendTaskCreation = (e) => {
         e.preventDefault();
@@ -25,10 +26,19 @@ function CreateTask() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            document.querySelector('.feedback').style.opacity = 1;
+            setFeedback(data.message);
+            // display feedback div during 3sec and hide it
+            setTimeout(() => {
+                setFeedback('');
+                // select feedback div to set visibilty to hidden
+                document.querySelector('.feedback').style.opacity = 0;
+            }
+            , 3000);
+
         })
         .catch((error) => {
-            console.error('Error:', error);
+            setFeedback(error.message);
         });
     }
 
@@ -74,6 +84,10 @@ function CreateTask() {
                 </div>                  
                 <input type='submit' className='button-markup' value="Valider"/>
             </form>
+
+            <div className='feedback'>
+                {feedback}
+            </div>
         </div>
     );
 }

@@ -5,6 +5,7 @@ function UserTasks() {
 
     const [tasks, setTasks] = useState([]);
     const [name, setName] = useState("");
+    const [feedback, setFeedback] = useState(''); // feedback from backend [success or error]
 
     useEffect(() => {
         let name = prompt("Quel est votre nom ?")
@@ -26,7 +27,18 @@ function UserTasks() {
             })
         })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data =>  {
+            document.querySelector('.feedback').style.opacity = 1;
+            setFeedback(data.message);
+            console.log(data)
+            // display feedback div during 3sec and hide it
+            setTimeout(() => {
+                setFeedback('');
+                // select feedback div to set visibilty to hidden
+                document.querySelector('.feedback').style.opacity = 0;
+            }
+            , 3000);
+        })
     }
 
     return (
@@ -50,6 +62,9 @@ function UserTasks() {
                         )
                     }
                 })}
+            </div>
+            <div className='feedback' id='feedback-end-task'>
+                {feedback}
             </div>
         </div>    
     );

@@ -3,6 +3,7 @@ import Navigation from './Navigation.js';
 function Tasks() {
 
     const [tasks, setTasks] = useState([]);
+    const [feedback, setFeedback] = useState(''); // feedback from backend [success or error]
 
     useEffect(() => {
         fetch('/tasks')
@@ -23,8 +24,19 @@ function Tasks() {
                 task_id: task_id
             })
         })
-        .then(response => response.json)
-        .then(data => console.log(data))
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.feedback').style.opacity = 1;
+            setFeedback(data.message);
+            console.log(data)
+            // display feedback div during 3sec and hide it
+            setTimeout(() => {
+                setFeedback('');
+                // select feedback div to set visibilty to hidden
+                document.querySelector('.feedback').style.opacity = 0;
+            }
+            , 3000);
+        })
         .catch((error) => console.log(error))
     }
 
@@ -49,6 +61,10 @@ function Tasks() {
                         </form>
                     </div>
                 ))}
+            </div>
+
+            <div className='feedback' id='feedback-accept-task'>
+                {feedback}
             </div>
         </div>
     );
