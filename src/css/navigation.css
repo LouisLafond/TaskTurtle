@@ -2,7 +2,11 @@
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-top: 1rem;
+    width: 100vw;
+    padding: 1rem;
+    background-color: #f4f4f4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    margin-bottom: 3rem;
 }
   
 #nav a {

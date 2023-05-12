@@ -39,12 +39,13 @@ def post_task():
     title = data['title'];
     price = data['price'];
     content = data['content'];
+    tel = data['tel'];
 
     c.execute("SELECT MAX(id) FROM Task");
     last_id = c.fetchone()[0];
     id = last_id+1;
     
-    c.execute("INSERT INTO Task (id, title, description, price, isAvailable, user) VALUES (?,?,?,?,?,?)", (id, title, content, price,1, name));
+    c.execute("INSERT INTO Task (id, title, description, price, isAvailable, user, tel) VALUES (?,?,?,?,?,?, ?)", (id, title, content, price,1, name, tel));
     db.commit();
     c.close();
     return redirect(url_for('get_tasks'));
@@ -67,15 +68,13 @@ def post_user_accept_task():
     c.close();
     return redirect(url_for('get_tasks'));
 
-@app.route('/tasks/achieve', methods=['POST'])
-def post_user_achieve_task():
+@app.route('/tasks/achieve', methods=['PATCH'])
+def patch_user_achieve_task():
     db = get_db()
     c = db.cursor()
-
     data = request.get_json();
-    task_user_id = data['task_user_id'];
-
-    c.execute("UPDATE Task_User SET isAchieved = 1 WHERE id = ?", (task_user_id));
+    id = data['id'];
+    c.execute("UPDATE Task_User SET isAchieved = 1 WHERE id=?", [id]);
     db.commit();
     c.close();
     return redirect(url_for('get_tasks'));

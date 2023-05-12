@@ -4,10 +4,10 @@ function Navigation() {
 
     return (
         <nav id='nav'>
-            <a href='/'>Accueil</a>
-            <a href='/tasks'>Services</a>
-            <a href='/tasks/create'>Proposer un service</a>
-            <a href='/tasks/user'>Liste des tâches acceptées</a>
+            <a href='/'>ACCUEIL</a>
+            <a href='/tasks'>SERVICES</a>
+            <a href='/tasks/create'>POSTER UNE TACHE</a>
+            <a href='/tasks/user'>LISTE DES TACHES ACCEPTEES</a>
         </nav>
     );
 }

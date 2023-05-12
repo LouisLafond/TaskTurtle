@@ -6,7 +6,8 @@ CREATE TABLE Task(
     description VARCHAR(200) NOT NULL,
     price FLOAT NOT NULL,
     isAvailable BOOLEAN NOT NULL,
-    user VARCHAR(200) NOT NULL
+    user VARCHAR(200) NOT NULL,
+    tel VARCHAR(200) NOT NULL
 );
 
 DROP TABLE IF EXISTS Task_User;

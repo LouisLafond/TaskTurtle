@@ -16,6 +16,19 @@ function UserTasks() {
             });
     }, []);
 
+    const endTask = (e, id) => {
+        e.preventDefault();
+        fetch('/tasks/achieve', {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: id
+            })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+    }
+
     return (
         <div id="user-tasks">
             <Navigation />
@@ -23,13 +36,17 @@ function UserTasks() {
             <div id='tasks-container'>
                 {tasks.map((task) => (
                     <div key={task[0]} id='task'>
+                        <p>fait : {task[3]}</p>
                         <h2 className='task-title'>{task[5]}</h2> {/* title */}
                         <p className='task-description'>{task[6]}</p> {/*description */}
                         <p className='task-price'> Prix : {task[7]} €</p> {/*price */}
-                        <button className='button-markup'>J'ai terminé cette tâche</button>
+                        <p className='task-tel'> Contact : {task[10]}</p> {/*telephone */}
+                        <p className='task-author'> Demandé par : {task[9]}</p> {/*Demandeur */}
+                        <form onSubmit={e => { endTask(e, task[0])}} method="post">
+                            <button className='button-markup'>J'ai terminé cette tâche</button>
+                        </form>
                     </div>
                 ))}
-
             </div>
         </div>    
     );

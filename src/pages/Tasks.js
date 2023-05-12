@@ -38,11 +38,13 @@ function Tasks() {
                         <div>
                             <h2 className='task-title'>{task[1]}</h2> {/* title */}
                             <p className='task-description'>{task[2]}</p> {/*description */}
-                            <p className='task-price'> Prix : {task[3]} €</p> {/*price */}
+                            <p className='task-price'> Rémunération : {task[3]} €</p> {/*price */}
+                            <p className='task-tel'> Contact : {task[6]}</p> {/*telephone */}
+                            <p className='task-author'> Demandé par : {task[5]}</p> {/*Demandeur */}
                         </div>
 
                         <form id='accept-task-form' onSubmit={e => {sendTaskAcceptation(e, task[0])}} method='post'>
-                            <h3>Vous souhaitez effectuer cette tâche ? </h3>
+                            <h3 className='text-center'>Vous souhaitez effectuer cette tâche ? </h3>
                             <input type='submit' className='button-markup' value="Accepter cette tâche"/>
                         </form>
                     </div>

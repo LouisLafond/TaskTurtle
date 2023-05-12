@@ -7,6 +7,7 @@ function CreateTask() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [price, setPrice] = useState(0);
+    const [tel, setTel] = useState('');
 
     const sendTaskCreation = (e) => {
         e.preventDefault();
@@ -18,7 +19,8 @@ function CreateTask() {
                 name: name,
                 title: title,
                 content: content,
-                price: price
+                price: price,
+                tel: tel
             })
         })
         .then(response => response.json())
@@ -33,7 +35,7 @@ function CreateTask() {
     return (
         <div id="create-task">
             <Navigation />
-            <h1 className='text-center'> Vous souhaitez proposer un service ?</h1>
+            <h1 className='text-center'> Vous avez besoin d'un service ?</h1>
             <form id='create-task-form' onSubmit={e => {sendTaskCreation(e)}} method='post'>
                 <div className='input-container'>
                     <label htmlFor="name">Votre nom :</label>
@@ -43,15 +45,15 @@ function CreateTask() {
                     /> 
                 </div>
                 <div className='input-container'>
-                    <label htmlFor="title">Titre du service :</label>
-                    <input type="text" placeholder="Le titre du service que vous proposez." id="title" name="title" size="50"
+                    <label htmlFor="title">Titre de la tâche :</label>
+                    <input type="text" placeholder="Le titre du service dont vous avez besoin." id="title" name="title" size="50"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
                     /> 
                 </div>
                 <div className='input-container'> 
-                    <label htmlFor="content">Service proposé :</label>
-                    <textarea id="content" placeholder="Décrivez ici le service que vous souhaitez mettre à disposition. " name="content" rows="5" cols="50"
+                    <label htmlFor="content">Tâche demandée :</label>
+                    <textarea id="content" placeholder="Décrivez ici le service que vous souhaitez demander. " name="content" rows="5" cols="50"
                     value={content} 
                     onChange={e => setContent(e.target.value)}
                     />
@@ -62,7 +64,14 @@ function CreateTask() {
                     value={price}
                     onChange={e => setPrice(e.target.value)}
                     /> 
-                </div>                        
+                </div>      
+                <div className='input-container'>
+                    <label htmlFor="tel">Votre numéro de téléphone (pour qu'on puisse vous demander plus d'informations) :</label>
+                    <input type='text' placeholder="06 86 78 54 23" id="tel" name="tel" size="50"
+                    value={tel}
+                    onChange={e => setTel(e.target.value)}
+                    /> 
+                </div>                  
                 <input type='submit' className='button-markup' value="Valider"/>
             </form>
         </div>
