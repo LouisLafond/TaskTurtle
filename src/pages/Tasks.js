@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import Navigation from './Navigation.js';
 function Tasks() {
 
     const [tasks, setTasks] = useState([]);
@@ -8,7 +8,6 @@ function Tasks() {
         fetch('/tasks')
         .then(res => res.json())
         .then(data => { 
-            console.log(data)
             setTasks(data)
         });
       }, []);
@@ -16,6 +15,7 @@ function Tasks() {
 
     return (
         <div id="tasks">
+            <Navigation />
             <h1 className='text-center'> Liste des tâches</h1>
             <div id='tasks-container'>
                 {tasks.map((task) => (

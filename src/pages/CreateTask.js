@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Navigation from './Navigation.js';
 
 function CreateTask() {
 
@@ -31,6 +32,7 @@ function CreateTask() {
 
     return (
         <div id="create-task">
+            <Navigation />
             <h1 className='text-center'> Vous souhaitez proposer un service ?</h1>
             <form id='create-task-form' onSubmit={e => {handleSubmit(e)}} method='post'>
                 <div className='input-container'>
