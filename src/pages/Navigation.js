@@ -7,7 +7,7 @@ function Navigation() {
             <a href='/'>Accueil</a>
             <a href='/tasks'>Services</a>
             <a href='/tasks/create'>Proposer un service</a>
-            <a href='/tasks/user/jules'>Liste des tâches acceptées</a>
+            <a href='/tasks/user'>Liste des tâches acceptées</a>
         </nav>
     );
 }

@@ -8,7 +8,7 @@ function CreateTask() {
     const [content, setContent] = useState('');
     const [price, setPrice] = useState(0);
 
-    const handleSubmit = (e) => {
+    const sendTaskCreation = (e) => {
         e.preventDefault();
         // post request to backend
         fetch('/tasks/create', {
@@ -34,7 +34,7 @@ function CreateTask() {
         <div id="create-task">
             <Navigation />
             <h1 className='text-center'> Vous souhaitez proposer un service ?</h1>
-            <form id='create-task-form' onSubmit={e => {handleSubmit(e)}} method='post'>
+            <form id='create-task-form' onSubmit={e => {sendTaskCreation(e)}} method='post'>
                 <div className='input-container'>
                     <label htmlFor="name">Votre nom :</label>
                     <input type="text" placeholder="Votre nom de famille suffira !" id="name" name="name" size="50"

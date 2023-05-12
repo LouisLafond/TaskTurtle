@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "./Navigation.js";
 
-function UserTasks(props) {
+function UserTasks() {
 
     const [tasks, setTasks] = useState([]);
+    const [name, setName] = useState("");
 
     useEffect(() => {
-        fetch('/tasks/user/' + props.name)
+        let name = prompt("Quel est votre nom ?")
+        setName(name)
+        fetch('/tasks/user/' + name)
             .then(res => res.json())
             .then(data => {
                 setTasks(data)
@@ -16,7 +19,7 @@ function UserTasks(props) {
     return (
         <div id="user-tasks">
             <Navigation />
-            <h1 className='text-center'> Liste des tâches de { props.name }</h1>
+            <h1 className='text-center'> Liste des tâches de { name }</h1>
             <div id='tasks-container'>
                 {tasks.map((task) => (
                     <div key={task[0]} id='task'>
