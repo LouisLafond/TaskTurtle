@@ -1,5 +1,3 @@
-https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project
-
 # Configuration du projet
 
 
@@ -32,11 +30,3 @@ Ganache est simulation d'un noeud Ethereum local. Il permet de tester les smart 
 - aller a la racine du projet
 - npm install ganache --global 
 - ganache
-
-# Explication du projet
-
-// image smart_contract_flask_ether.png in .md file
-![alt text](smart_contract_flask_ether.png "Explication smart contract avec Flask et un noeud Ethereum")
-
-Pour mettre tous les paquets python dans un fichier requirements.txt :
-- pip freeze > requirements.txt
