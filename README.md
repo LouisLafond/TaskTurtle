@@ -27,6 +27,12 @@ Lancer le frontend (dans un autre terminal):
 - npm install
 - npm run start
 
+Lancer ganache (dans un autre terminal) :
+Ganache est simulation d'un noeud Ethereum local. Il permet de tester les smart contracts sans avoir à déployer sur la blockchain.
+- aller a la racine du projet
+- npm install ganache --global 
+- ganache
+
 # Explication du projet
 
 // image smart_contract_flask_ether.png in .md file

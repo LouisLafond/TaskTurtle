@@ -1,0 +1,15 @@
+#login {
+    width: 50vw;
+    text-align: center;
+    display: block;
+    margin: auto;
+    color: rgb(0, 0, 0);
+    align-items: center;
+    height: 100vh;
+    margin-top: 5rem;
+}
+
+.p {
+    font-size: 1.2rem;
+}
+  
