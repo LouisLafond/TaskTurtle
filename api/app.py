@@ -72,10 +72,14 @@ def post_user_accept_task():
 
     c.execute("UPDATE Task SET isAvailable = 0 WHERE id=?", [task_id]);
     db.commit();
-    c.execute("SELECT MAX(id) FROM Task_User");
-    if c.fetchone()[0] is None:
+    # select number of tasks
+    c.execute("SELECT COUNT(*) FROM Task");
+    # check if result is 0
+    if (c.fetchone()[0] <= 0):
         id = 1;
     else:
+        # select last id
+        c.execute("SELECT MAX(id) FROM Task");
         last_id = c.fetchone()[0];
         id = last_id+1;
 

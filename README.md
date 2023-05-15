@@ -27,6 +27,7 @@ Lancer le frontend (dans un autre terminal):
 
 Lancer ganache (dans un autre terminal) :
 Ganache est simulation d'un noeud Ethereum local. Il permet de tester les smart contracts sans avoir à déployer sur la blockchain.
+Vous pouvez visualiser les transactions effectuées sur ce terminal.
 - aller a la racine du projet
 - npm install ganache --global 
 - ganache

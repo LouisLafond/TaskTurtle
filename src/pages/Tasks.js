@@ -60,7 +60,6 @@ function Tasks() {
             setTasks(tasks.filter(task => task[0] !== task_id));
             document.querySelector('.feedback').style.opacity = 1;
             setFeedback(data.message);
-            console.log(data)
             // display feedback div during 3sec and hide it
             setTimeout(() => {
                 setFeedback('');
@@ -71,41 +70,57 @@ function Tasks() {
         })
         .catch((error) => console.log(error))
     }
+    // si aucune tache n'est disponible on affiche un message
+    let tasksAvailable = false;
+    tasks.forEach(task => {
+        if (task[4] === 1) {
+            tasksAvailable = true;
+        }
+    }); 
 
-    return (
-        <div id="tasks">
-            <Navigation />
-            <h1 className='text-center'> {user.name}, souhaitez-vous accepter une de ces tâches ?</h1>
-            <div id='tasks-container'>
-                {tasks.map((task) => {
-                    if(task[4] === 1) {
-                        return (
-                            <div id='task' key={task[0]}>
-                                <div>
-                                    <h2 className='task-title'>{task[1]}</h2> {/* title */}
-                                    <p className='task-description'>{task[2]}</p> {/*description */}
-                                    <p className='task-price'> Rémunération : {task[3]} ETH</p> {/*price */}
-                                    <p className='task-tel'> Contact : {task[6]}</p> {/*telephone */}
-                                    <p className='task-author'> Demandé par : {task[5]}</p> {/*Demandeur */}
+    if (!tasksAvailable) {
+        return (
+            <div id="tasks">
+                <Navigation />
+                <h1 className='text-center'>Aucune tâche disponible, <a href="/tasks/create">proposez en une !</a> </h1>
+            </div>
+        )   
+    } else {
+        return (
+            <div id="tasks">
+                <Navigation />
+                <h1 className='text-center'> {user.name}, souhaitez-vous accepter une de ces tâches ?</h1>
+                <div id='tasks-container'>
+                    {tasks.map((task) => {
+                        if(task[4] === 1) {
+                            return (
+                                <div id='task' key={task[0]}>
+                                    <div>
+                                        <h2 className='task-title'>{task[1]}</h2> {/* title */}
+                                        <p className='task-description'>{task[2]}</p> {/*description */}
+                                        <p className='task-price'> Rémunération : {task[3]} ETH</p> {/*price */}
+                                        <p className='task-tel'> Contact : {task[6]}</p> {/*telephone */}
+                                        <p className='task-author'> Demandé par : {task[5]}</p> {/*Demandeur */}
+                                    </div>
+    
+                                    <form id='accept-task-form' onSubmit={e => {sendTaskAcceptation(e, task[0], task[5])}} method='post'>
+                                        <h3 className='text-center'>Vous souhaitez effectuer cette tâche ? </h3>
+                                        <input type='submit' className='button-markup' value="Accepter cette tâche"/>
+                                    </form>
                                 </div>
-
-                                <form id='accept-task-form' onSubmit={e => {sendTaskAcceptation(e, task[0], task[5])}} method='post'>
-                                    <h3 className='text-center'>Vous souhaitez effectuer cette tâche ? </h3>
-                                    <input type='submit' className='button-markup' value="Accepter cette tâche"/>
-                                </form>
-                            </div>
-                        )
-                    }
-
-                    return null;
-                })}
+                            )
+                        }
+    
+                        return null;
+                    })}
+                </div>
+    
+                <div className='feedback' id='feedback-accept-task'>
+                    {feedback}
+                </div>
             </div>
-
-            <div className='feedback' id='feedback-accept-task'>
-                {feedback}
-            </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default Tasks;

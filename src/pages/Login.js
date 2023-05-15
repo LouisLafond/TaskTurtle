@@ -34,6 +34,10 @@ function Login() {
                 Cette connexion va aussi vous attribuer une adresse pour la blockchain, en choisissant une des adresses générée par ganache.
             </p>
 
+            <p className='p'> 
+                Il n'y a donc pas de sécurité, mais l'objectif de ce projet est également d'utiliser solidity, nous avons donc décidé qu'il était judicieux de pouvoir vous donner accès a plusieurs utilisateurs pour facilement changer de compte et créer / accepter des tâches avec différents utilisateurs.
+            </p>
+
             <p className='p'>Voici les 8 utilisateurs disponibles : </p>    
 
             <p className='p'>
