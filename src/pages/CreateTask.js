@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Navigation from './Navigation.js';
+import { ethers } from 'ethers';
 
-function CreateTask() {
+function CreateTask(props) {
 
     const [name, setName] = useState('');
     const [title, setTitle] = useState('');
@@ -10,7 +11,13 @@ function CreateTask() {
     const [tel, setTel] = useState('');
     const [feedback, setFeedback] = useState(''); // feedback from backend [success or error]
 
+    async function createTask(){
+        const amount = ethers.utils.parseEther('1')
+        await props.appContract.createTask(title, content, amount, {from: props.userSolidity})
+    }
+
     const sendTaskCreation = (e) => {
+        createTask();
         e.preventDefault();
         // post request to backend
         fetch('/tasks/create', {
@@ -41,6 +48,8 @@ function CreateTask() {
             setFeedback(error.message);
         });
     }
+
+   
 
     return (
         <div id="create-task">

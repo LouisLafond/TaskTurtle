@@ -1,14 +1,12 @@
-from flask import Flask, g, jsonify, request, redirect, url_for
+from flask import Flask, g, jsonify, request
 import sqlite3
 
 DATABASE = 'database.db'
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Créé une connexion à la base récupére la connexion existante 
 def get_db(): 
-             
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
