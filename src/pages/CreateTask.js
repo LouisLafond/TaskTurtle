@@ -1,30 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navigation from './Navigation.js';
+import { taskContractAbi } from '../appAbi.js';
 import { ethers } from 'ethers';
 
-function CreateTask(props) {
+function CreateTask() {
+    const provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+    const taskContractAddress = "0xf8e81D47203A594245E36C48e151709F0C19fBe8";
 
-    const [name, setName] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [price, setPrice] = useState(0);
     const [tel, setTel] = useState('');
     const [feedback, setFeedback] = useState(''); // feedback from backend [success or error]
+    const [user, setUser] = useState({});
+    const [signer, setSigner] = useState();
+    const [appContract, setAppContract] = useState('')
+    useEffect(() => {
+        // take user from localstorage
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            setUser(user);
+        } else {
+            window.location.href = '/login';
+        }
 
-    async function createTaskWithSolidity(){
-        const amount = ethers.utils.parseEther('1')
-        await props.appContract.createTask(title, content, amount, {from: props.userSolidity})
+        provider.listAccounts().then((accounts) => {
+            setSigner(accounts[user.id]);
+        });
+
+        let contract_signer = provider.getSigner(signer);
+        setAppContract(new ethers.Contract(taskContractAddress, taskContractAbi, contract_signer));
+    }, []);
+
+    async function createTaskWithSolidity(id){
+        await appContract.createTask(id,title, content, price)
     }
 
     const sendTaskCreation = (e) => {
-        createTaskWithSolidity();
         e.preventDefault();
         // post request to backend
         fetch('/tasks/create', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                name: name,
+                name: user.name,
                 title: title,
                 content: content,
                 price: price,
@@ -33,6 +52,8 @@ function CreateTask(props) {
         })
         .then(response => response.json())
         .then(data => {
+            createTaskWithSolidity(data.id);
+
             document.querySelector('.feedback').style.opacity = 1;
             setFeedback(data.message);
             // display feedback div during 3sec and hide it
@@ -56,13 +77,6 @@ function CreateTask(props) {
             <Navigation />
             <h1 className='text-center'> Vous avez besoin d'un service ?</h1>
             <form id='create-task-form' onSubmit={e => {sendTaskCreation(e)}} method='post'>
-                <div className='input-container'>
-                    <label htmlFor="name">Votre nom :</label>
-                    <input type="text" placeholder="Votre nom de famille suffira !" id="name" name="name" size="50"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    /> 
-                </div>
                 <div className='input-container'>
                     <label htmlFor="title">Titre de la tâche :</label>
                     <input type="text" placeholder="Le titre du service dont vous avez besoin." id="title" name="title" size="50"

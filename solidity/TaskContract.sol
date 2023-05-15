@@ -35,7 +35,6 @@ contract TaskContract {
     // Une tâche est cterminée
     event EndTask(
         uint _taskId,
-        address _asker,
         address _worker
     );
 
@@ -70,6 +69,7 @@ contract TaskContract {
         
         require(task.step == 0, "Mauvais etat de la tache");
         require(msg.value == task.price, "Mauvais montant");
+        
         task.step = 1;
         task.worker = msg.sender;
 
@@ -77,12 +77,17 @@ contract TaskContract {
     }
 
     function completeTask(uint _taskId) public {
-        Task storage task = task_list[_taskId];
+        Task memory task;
+        for (uint i = 0; i < task_list.length; i++) {
+            if (task_list[i].taskId == _taskId) {
+                task = task_list[i];
+            }
+        }
 
         require(task.step == 1, "Mauvais etat de la tache");
-        require(task.worker == msg.sender, "Seul celui qui a accepter la tache peut la terminer.");
-        
+        require(msg.sender == task.worker, "Mauvais worker");
+
         task.step = 2;
-        emit EndTask(_taskId, msg.sender, task.worker);
+        emit EndTask(_taskId,  msg.sender);
     }
 }

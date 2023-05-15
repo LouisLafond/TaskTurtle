@@ -2,6 +2,7 @@ https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project
 
 # Configuration du projet
 
+
 Créer un environnement virtuel python :
 - cd api
 - python -m venv venv
@@ -14,10 +15,6 @@ Creer la base de données (locale au projet, utilisation de SQLite) :
 
 - cd api
 - python init_db.py
-
-Compiler le smart contract :
-- cd api
-- python3 solidity.py
 
 Lancer le backend :
 

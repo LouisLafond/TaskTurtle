@@ -1,16 +1,35 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "./Navigation.js";
+import { ethers } from 'ethers';
+import { taskContractAbi } from '../appAbi.js';
 
-function UserTasks(props) {
+function UserTasks() {
 
+    const provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+    const taskContractAddress = "0xf8e81D47203A594245E36C48e151709F0C19fBe8";
     const [tasks, setTasks] = useState([]);
-    const [name, setName] = useState("");
     const [feedback, setFeedback] = useState(''); // feedback from backend [success or error]
+    const [user, setUser] = useState({});
+    const [signer, setSigner] = useState();
+    const [appContract, setAppContract] = useState('')
 
     useEffect(() => {
-        let name = prompt("Quel est votre nom ?")
-        setName(name)
-        fetch('/tasks/user/' + name)
+        // take user from localstorage 
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            setUser(user);
+        } else {
+            window.location.href = '/login';
+        }
+
+        provider.listAccounts().then((accounts) => {
+            setSigner(accounts[user.id]);
+        });
+
+        let contract_signer = provider.getSigner(signer);
+        setAppContract(new ethers.Contract(taskContractAddress, taskContractAbi, contract_signer));
+
+        fetch('/tasks/user/' + user.name)
             .then(res => res.json())
             .then(data => {
                 setTasks(data)
@@ -18,7 +37,7 @@ function UserTasks(props) {
     }, []);
 
     async function endTaskWithSolidity(task_id){
-        await props.appContract.completeTask(task_id, {from: props.userSolidity})
+        await appContract.completeTask(task_id)
     }
 
     const endTask = (e, id) => {
@@ -28,14 +47,14 @@ function UserTasks(props) {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                id: id
+                id: id,
             })
         })
         .then(response => response.json())
         .then(data =>  {
+            setTasks(tasks.filter(task => task[0] !== id));
             document.querySelector('.feedback').style.opacity = 1;
             setFeedback(data.message);
-            console.log(data)
             // display feedback div during 3sec and hide it
             setTimeout(() => {
                 setFeedback('');
@@ -43,16 +62,17 @@ function UserTasks(props) {
                 document.querySelector('.feedback').style.opacity = 0;
             }
             , 3000);
+            
         })
     }
 
     return (
         <div id="user-tasks">
             <Navigation />
-            <h1 className='text-center'> Liste des tâches de { name }</h1>
+            <h1 className='text-center'> { user.name }, voici les tâches que vous avez acceptées</h1>
             <div id='tasks-container'>
-                {tasks.map((task) => {
-                    if(task[3]== 0) {
+                { tasks.map((task) => {
+                    if(task[3] === 0) {
                         return (
                             <div key={task[0]} id='task'>
                                     <h2 className='task-title'>{task[5]}</h2> 
@@ -66,6 +86,8 @@ function UserTasks(props) {
                             </div>
                         )
                     }
+
+                    return null;
                 })}
             </div>
             <div className='feedback' id='feedback-end-task'>

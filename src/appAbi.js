@@ -61,12 +61,6 @@ const taskContractAbi = [
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "_asker",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
 				"name": "_worker",
 				"type": "address"
 			}
@@ -102,6 +96,11 @@ const taskContractAbi = [
 	},
 	{
 		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskId",
+				"type": "uint256"
+			},
 			{
 				"internalType": "string",
 				"name": "_title",

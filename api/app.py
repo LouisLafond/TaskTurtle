@@ -41,15 +41,23 @@ def post_task():
     content = data['content'];
     tel = data['tel'];
 
-    c.execute("SELECT MAX(id) FROM Task");
-    last_id = c.fetchone()[0];
-    id = last_id+1;
+    # select number of tasks
+    c.execute("SELECT COUNT(*) FROM Task");
+    # check if result is 0
+    if (c.fetchone()[0] <= 0):
+        id = 1;
+    else:
+        # select last id
+        c.execute("SELECT MAX(id) FROM Task");
+        last_id = c.fetchone()[0];
+        id = last_id+1;
     
     c.execute("INSERT INTO Task (id, title, description, price, isAvailable, user, tel) VALUES (?,?,?,?,?,?,?)", (id, title, content, price,1, name, tel));
     db.commit();
     c.close();
     return jsonify(
-        message="Tâche créée avec succès."
+        message="Tâche créée avec succès.",
+        id=id
     )
 
 @app.route('/tasks/accept', methods=['POST', 'PATCH'])
@@ -65,8 +73,11 @@ def post_user_accept_task():
     c.execute("UPDATE Task SET isAvailable = 0 WHERE id=?", [task_id]);
     db.commit();
     c.execute("SELECT MAX(id) FROM Task_User");
-    last_id = c.fetchone()[0];
-    id = last_id+1;
+    if c.fetchone()[0] is None:
+        id = 1;
+    else:
+        last_id = c.fetchone()[0];
+        id = last_id+1;
 
     c.execute("INSERT INTO Task_User(id, taskId, user, isAchieved) VALUES (?,?,?,?)", (id, task_id, name, 0));
     db.commit();
@@ -85,7 +96,7 @@ def patch_user_achieve_task():
     db.commit();
     c.close();
     return jsonify(
-        message="Tâche supprimée de la liste avec succès."
+        message="Tâche supprimée de la liste avec succès.",
     )
 
 @app.route('/tasks/user/<name>')
