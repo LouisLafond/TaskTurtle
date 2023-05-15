@@ -15,31 +15,11 @@ function App() {
   const provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 
   useEffect(() => {
-
-    // async function test() {
-    //   if(window.ethereum) {
-    //     try {
-    //         const accounts = await window.ethereum.request({
-    //             method: "eth_requestAccounts",
-    //         });
-    //         setUserAccount(accounts[0]);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    //   } else {
-    //     alert('Meta Mask not detected');
-    //   }
-    // }
-
-    //test()
     provider.listAccounts().then((accounts) => {
-      console.log("accounts ", accounts);
       setUserAccount(accounts[0]);
       setWorkerAccount(accounts[1]);
     });
-    console.log("prov ", provider)
     let signer = provider.getSigner(userAccount);
-    console.log(userAccount);
     setAppContract(new ethers.Contract(taskContractAddress, taskContractAbi, signer));
   }, [userAccount]);
 

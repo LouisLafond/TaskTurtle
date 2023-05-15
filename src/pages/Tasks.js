@@ -50,22 +50,26 @@ function Tasks(props) {
             <Navigation />
             <h1 className='text-center'> Liste des tâches disponibles</h1>
             <div id='tasks-container'>
-                {tasks.map((task) => (
-                    <div id='task' key={task[0]}>
-                        <div>
-                            <h2 className='task-title'>{task[1]}</h2> {/* title */}
-                            <p className='task-description'>{task[2]}</p> {/*description */}
-                            <p className='task-price'> Rémunération : {task[3]} €</p> {/*price */}
-                            <p className='task-tel'> Contact : {task[6]}</p> {/*telephone */}
-                            <p className='task-author'> Demandé par : {task[5]}</p> {/*Demandeur */}
-                        </div>
+                {tasks.map((task) => {
+                    if(task[4] == 1) {
+                        return (
+                            <div id='task' key={task[0]}>
+                                <div>
+                                    <h2 className='task-title'>{task[1]}</h2> {/* title */}
+                                    <p className='task-description'>{task[2]}</p> {/*description */}
+                                    <p className='task-price'> Rémunération : {task[3]} ETH</p> {/*price */}
+                                    <p className='task-tel'> Contact : {task[6]}</p> {/*telephone */}
+                                    <p className='task-author'> Demandé par : {task[5]}</p> {/*Demandeur */}
+                                </div>
 
-                        <form id='accept-task-form' onSubmit={e => {sendTaskAcceptation(e, task[0])}} method='post'>
-                            <h3 className='text-center'>Vous souhaitez effectuer cette tâche ? </h3>
-                            <input type='submit' className='button-markup' value="Accepter cette tâche"/>
-                        </form>
-                    </div>
-                ))}
+                                <form id='accept-task-form' onSubmit={e => {sendTaskAcceptation(e, task[0])}} method='post'>
+                                    <h3 className='text-center'>Vous souhaitez effectuer cette tâche ? </h3>
+                                    <input type='submit' className='button-markup' value="Accepter cette tâche"/>
+                                </form>
+                            </div>
+                        )
+                    }
+                })}
             </div>
 
             <div className='feedback' id='feedback-accept-task'>

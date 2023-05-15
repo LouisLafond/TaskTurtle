@@ -57,7 +57,7 @@ function UserTasks(props) {
                             <div key={task[0]} id='task'>
                                     <h2 className='task-title'>{task[5]}</h2> 
                                     <p className='task-description'>{task[6]}</p> 
-                                    <p className='task-price'> Prix : {task[7]} €</p> 
+                                    <p className='task-price'> Rémunération : {task[7]} ETH</p> 
                                     <p className='task-tel'> Contact : {task[10]}</p> 
                                     <p className='task-author'> Demandé par : {task[9]}</p> 
                                     <form onSubmit={e => { endTask(e, task[0])}} method="post">

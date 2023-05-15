@@ -52,7 +52,7 @@ def post_task():
         message="Tâche créée avec succès."
     )
 
-@app.route('/tasks/accept', methods=['POST'])
+@app.route('/tasks/accept', methods=['POST', 'PATCH'])
 def post_user_accept_task():
     db = get_db()
     c = db.cursor()
@@ -62,6 +62,8 @@ def post_user_accept_task():
     name = name.upper();
     task_id = data['task_id'];
 
+    c.execute("UPDATE Task SET isAvailable = 0 WHERE id=?", [task_id]);
+    db.commit();
     c.execute("SELECT MAX(id) FROM Task_User");
     last_id = c.fetchone()[0];
     id = last_id+1;
