@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "./Navigation.js";
 
-function UserTasks() {
+function UserTasks(props) {
 
     const [tasks, setTasks] = useState([]);
     const [name, setName] = useState("");
@@ -17,7 +17,12 @@ function UserTasks() {
             });
     }, []);
 
+    async function endTaskWithSolidity(task_id){
+        await props.appContract.completeTask(task_id, {from: props.userSolidity})
+    }
+
     const endTask = (e, id) => {
+        endTaskWithSolidity(id);
         e.preventDefault();
         fetch('/tasks/achieve', {
             method: 'PATCH',

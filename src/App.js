@@ -9,7 +9,7 @@ import { taskContractAbi } from './appAbi.js';
 
 function App() {
   const [appContract, setAppContract] = useState('')
-  const taskTurtleAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+  const taskContractAddress = "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8";
   const [workerAccount, setWorkerAccount] = useState();
   const [userAccount, setUserAccount] = useState();
   const provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
@@ -39,9 +39,8 @@ function App() {
     });
     console.log("prov ", provider)
     let signer = provider.getSigner(userAccount);
-    console.log(signer);
     console.log(userAccount);
-    setAppContract(new ethers.Contract(taskTurtleAddress, taskContractAbi, signer));
+    setAppContract(new ethers.Contract(taskContractAddress, taskContractAbi, signer));
   }, [userAccount]);
 
   return (
@@ -49,9 +48,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/tasks" element={<Tasks worker={workerAccount} appContract={appContract} userSolidity={userAccount} />} />
           <Route path="/tasks/create" element={<CreateTask worker={workerAccount} appContract={appContract} userSolidity={userAccount} />} />
-          <Route path="/tasks/user" element={<UserTasks />} />
+          <Route path="/tasks/user" element={<UserTasks worker={workerAccount} appContract={appContract} userSolidity={userAccount} />} />
         </Routes>
       </Router>
     </div>

@@ -11,13 +11,13 @@ function CreateTask(props) {
     const [tel, setTel] = useState('');
     const [feedback, setFeedback] = useState(''); // feedback from backend [success or error]
 
-    async function createTask(){
+    async function createTaskWithSolidity(){
         const amount = ethers.utils.parseEther('1')
         await props.appContract.createTask(title, content, amount, {from: props.userSolidity})
     }
 
     const sendTaskCreation = (e) => {
-        createTask();
+        createTaskWithSolidity();
         e.preventDefault();
         // post request to backend
         fetch('/tasks/create', {
@@ -78,8 +78,8 @@ function CreateTask(props) {
                     />
                 </div>
                 <div className='input-container'>
-                    <label htmlFor="price">Coût horaire (€) :</label>
-                    <input type="number" placeholder="En euros, le prix horaire que vous demandez." id="price" name="price" size="50"
+                    <label htmlFor="price">Coût (ETH) :</label>
+                    <input type="number" placeholder="En ether, le prix horaire que vous demandez." id="price" name="price" size="50"
                     value={price}
                     onChange={e => setPrice(e.target.value)}
                     /> 

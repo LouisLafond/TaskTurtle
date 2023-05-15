@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from './Navigation.js';
-function Tasks() {
+function Tasks(props) {
 
     const [tasks, setTasks] = useState([]);
     const [feedback, setFeedback] = useState(''); // feedback from backend [success or error]
@@ -12,8 +12,13 @@ function Tasks() {
             setTasks(data)
         });
       }, []);
-    
+
+    async function acceptTaskWithSolidity(task_id){
+        await props.appContract.acceptTask(task_id, {from: props.userSolidity})
+    }
+
     const sendTaskAcceptation = (e, task_id) => {
+        acceptTaskWithSolidity(task_id);
         e.preventDefault();
         let name = window.prompt("Entrez votre nom :");
         fetch('/tasks/accept', {
