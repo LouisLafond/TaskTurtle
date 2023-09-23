@@ -1,7 +1,7 @@
 ## Présentation
 
 Projet réalisé dans le cadre de ma 2nde année à TELECOM Nancy, en binôme.
-Projet développement d'un système de mise en relation entre des personnes capables de réaliser certaines tâches ou travaux et d’autres qui ont besoin de services.
+Il s'agit du développement d'un système de mise en relation entre des personnes capables de réaliser certaines tâches ou travaux et d’autres qui ont besoin de services.
 
 Le service prend la forme d'une application web (ReactJs pour le front, Flask pour le back). Lorsqu'un service est réalisé, il est inscrit dans une blockchain (Solidity).
 
